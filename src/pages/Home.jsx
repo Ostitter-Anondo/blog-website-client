@@ -3,10 +3,12 @@ import Navbar from "./components/Navbar";
 const Home = () => {
   return (
     <>
-      <header>
+      <header className="sticky top-0">
         <Navbar />
       </header>
-      <main></main>
+      <main>
+        idhar ghar
+      </main>
     </>
   );
 };
