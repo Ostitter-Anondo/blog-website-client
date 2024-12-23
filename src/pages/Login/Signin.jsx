@@ -39,7 +39,7 @@ const Signin = () => {
           .put(`/googleuser`, { uid, email })
           .then((res) => {
             setUserData(res.data.user);
-            toastSuc(`ailoailoailore rongebhora google amar ailore`);
+            toastSuc(`google login success`);
             navigate("/");
           })
           .catch((err) => console.error(err));

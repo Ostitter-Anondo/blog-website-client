@@ -9,6 +9,8 @@ import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
 import Signin from "./pages/Login/Signin";
 import NotFound from "./pages/NotFound";
+import AddBlog from "./pages/AddBlog";
+import PrivateRoute from "./utils/PrivateRoute";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -20,6 +22,9 @@ createRoot(document.getElementById("root")).render(
           <Route path="login" element={<Login />}>
             <Route index element={<Signin />} />
           </Route>
+          <Route path ="/addblog" element={<PrivateRoute>
+            <AddBlog />
+          </PrivateRoute>} />
           <Route path ="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
