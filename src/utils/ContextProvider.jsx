@@ -34,6 +34,7 @@ const ContextProvider = ({ children }) => {
   const signOutUser = () => {
     setLoading(true);
     setUserData(null);
+    toastSuc(`user successfully signed out`)
     return signOut(auth);
   };
 

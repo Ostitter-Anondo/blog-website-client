@@ -1,8 +1,13 @@
 import { BsFillMenuButtonWideFill } from "react-icons/bs";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import blog from "../../assets/blog.png";
+import useMainContext from "../../utils/useMainContext";
 
 const Navbar = () => {
+  const { userData, signOutUser } = useMainContext();
+
+  const navigate = useNavigate();
+
   const links = (
     <>
       <li>
@@ -33,6 +38,28 @@ const Navbar = () => {
       </ul>
     </>
   );
+  const userBtns = (
+    <>
+      <div className="menu menu-horizontal items-center gap-3 border border-base-100 rounded-full">
+        <Link className="btn btn-circle size-12 p-1" to="/dashboard">
+          <img
+            src={userData?.photo}
+            className="object-fill aspect-square rounded-full"
+            alt="usrIMG"
+          />
+        </Link>
+        <button
+          onClick={() => {
+            signOutUser();
+            navigate("/");
+          }}
+          className="btn btn-outline btn-error rounded-full"
+        >
+          Sign Out
+        </button>
+      </div>
+    </>
+  );
 
   return (
     <>
@@ -50,13 +77,14 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost text-xl">
-            <img src={blog} className="size-8" alt="" /> <span className="hidden md:block">BlogWebsite</span>
+            <img src={blog} className="size-8" alt="" />{" "}
+            <span className="hidden md:block">BlogWebsite</span>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
-        <div className="navbar-end">{authtBtns}</div>
+        <div className="navbar-end">{userData ? userBtns : authtBtns}</div>
       </div>
     </>
   );

@@ -5,7 +5,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RiImageCircleAiLine } from "react-icons/ri";
 import { PiPasswordBold } from "react-icons/pi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useMainContext from "../utils/useMainContext";
 import useAxios from "../utils/useAxios";
 
@@ -19,6 +19,8 @@ const Signup = () => {
   const passwordRegex =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  const navigate = useNavigate();
 
   const signupBehavior = (e) => {
     e.preventDefault();
@@ -46,6 +48,7 @@ const Signup = () => {
           .then((res) => {
             console.log(res.data);
             toastSuc(`registration successful`);
+            navigate('/login');
           })
           .catch((err) => console.error(err));
       })
