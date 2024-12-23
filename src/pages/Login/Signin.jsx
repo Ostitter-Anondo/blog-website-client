@@ -7,7 +7,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import useAxios from "../../utils/useAxios";
 
 const Signin = () => {
-  const { loginMailPass, userData, setUserData, signInGoogle, toastSuc } =
+  const { loginMailPass, setUserData, signInGoogle, toastSuc, toastErr } =
     useMainContext();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -26,13 +26,27 @@ const Signin = () => {
         setUserData(user.data);
         toastSuc(`User signed in successfully`);
         navigate("/");
-      });
+      })
+      .catch((err) => toastErr(err.message));
   };
 
   const googleLogin = () => {
-    toastSuc(`ailoailoailore rongebhora google amar ailore`);
+    signInGoogle()
+      .then((result) => {
+        const uid = result.user.uid;
+        const email = result.user.email;
+        axiosHook
+          .put(`/googleuser`, { uid, email })
+          .then((res) => {
+            setUserData(res.data.user);
+            toastSuc(`ailoailoailore rongebhora google amar ailore`);
+            navigate("/");
+          })
+          .catch((err) => console.error(err));
+      })
+      .catch((err) => console.err(err));
   };
-  
+
   return (
     <div>
       <form

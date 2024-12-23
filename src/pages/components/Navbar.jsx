@@ -48,6 +48,7 @@ const Navbar = () => {
             alt="usrIMG"
           />
         </Link>
+        <p>{userData?.name}</p>
         <button
           onClick={() => {
             signOutUser();
