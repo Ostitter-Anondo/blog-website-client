@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Context from "./Context";
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { auth } from "./firebase/firebase.init";
+import axios from "axios";
 
 const ContextProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
@@ -34,7 +36,7 @@ const ContextProvider = ({ children }) => {
   const signOutUser = () => {
     setLoading(true);
     setUserData(null);
-    toastSuc(`user successfully signed out`)
+    toastSuc(`user successfully signed out`);
     return signOut(auth);
   };
 
@@ -78,6 +80,40 @@ const ContextProvider = ({ children }) => {
     toastErr,
     toastSuc,
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        const user = { uid: currentUser.uid };
+
+        axios
+          .post(`${import.meta.env.VITE_dbApi}/jwt`, user, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            setUserData(res.data);
+            setLoading(false);
+          })
+          .catch((err) => console.error(err));
+      } else {
+        axios
+          .post(
+            `${import.meta.env.VITE_dbApi}/logout`,
+            {},
+            { withCredentials: true }
+          )
+          .then((res) => console.log("logout", res.data))
+          .then(() => {
+            setLoading(false);
+            setUserData(null);
+          })
+          .catch(err => console.error(err));
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return <Context.Provider value={dataValues}>{children}</Context.Provider>;
 };
