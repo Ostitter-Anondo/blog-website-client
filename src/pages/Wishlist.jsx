@@ -5,13 +5,32 @@ import NotFound from "./NotFound";
 import { FaRegTrashCan } from "react-icons/fa6";
 
 import "ka-table/style.css";
+import useAxios from "../utils/useAxios";
 
 const Wishlist = () => {
-  const { wishlist } = useMainContext();
+  const { wishlist, userData, setWishlist, toastSuc } = useMainContext();
   console.log(wishlist);
+  const axiosHook = useAxios();
   if (!wishlist) {
     return <NotFound />;
   }
+
+  const handleDelete = (blogId) => {
+    const newData = {
+      uid: userData.uid,
+      wishlist: wishlist.wishlist.filter((item) => item.blogId != blogId),
+    };
+    axiosHook
+      .put("/addtowishlist", newData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.result.acknowledged) {
+          toastSuc(`blog removed from wishlist`);
+        }
+        setWishlist(res.data.newWishlist);
+      })
+      .catch((err) => console.error(err));
+  };
 
   return (
     <>
@@ -41,17 +60,21 @@ const Wishlist = () => {
                       </div>
                       <div>
                         <div className="font-bold">{article.title}</div>
-                        <div className="text-sm opacity-50">{article.email}</div>
+                        <div className="text-sm opacity-50">
+                          {article.email}
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <span className="badge badge-sm badge-outline">{article.category}</span>
+                    <span className="badge badge-sm badge-outline">
+                      {article.category}
+                    </span>
                   </td>
                   <th>
                     <div className="flex gap-6 justify-center">
                       <button
-                        onClick={() => {}}
+                        onClick={() => {handleDelete(article.blogId)}}
                         className="btn btn-error btn-xs"
                       >
                         <FaRegTrashCan />

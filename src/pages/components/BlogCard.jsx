@@ -29,24 +29,30 @@ const BlogCard = ({ blogdata }) => {
             toastSuc(`file added to wishlist`);
           }
           setWishlist(res.data.wishlist);
-          setUserData(res.data.user)
+          setUserData(res.data.user);
         })
         .catch((err) => console.error(err));
     } else {
-      if (wishlist.wishlist.filter((item) => item.blogId === blog.blogId).length > 0) {
+      if (
+        wishlist.wishlist.filter((item) => item.blogId === blog.blogId).length >
+        0
+      ) {
         toastErr(`blog already in wishlist`);
       } else {
         const newBlog = {
           uid: userData.uid,
           wishlist: [...wishlist.wishlist, blog],
         };
-        axiosHook.put("/addtowishlist", newBlog).then((res) => {
-          console.log(res.data);
-          if (res.data.result.acknowledged) {
-            toastSuc(`blog added to wishlist`);
-          }
-          setWishlist(res.data.newWishlist);
-        });
+        axiosHook
+          .put("/addtowishlist", newBlog)
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.result.acknowledged) {
+              toastSuc(`blog added to wishlist`);
+            }
+            setWishlist(res.data.newWishlist);
+          })
+          .catch((err) => console.error(err));
       }
     }
   };
