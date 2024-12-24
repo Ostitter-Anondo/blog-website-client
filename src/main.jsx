@@ -1,10 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import Home from "./pages/Home";
 import ContextProvider from "./utils/ContextProvider";
 import Signup from "./pages/Signup";
@@ -17,6 +14,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import AllBlogs from "./pages/AllBlogs";
 import axios from "axios";
 import Wishlist from "./pages/Wishlist";
+import BlogArticle from "./pages/BlogArticle";
 
 const router = createBrowserRouter([
   {
@@ -47,12 +45,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/wishlist",
-    element: <Wishlist />,
+    element: (
+      <PrivateRoute>
+        <Wishlist />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/blogs",
     element: <AllBlogs />,
-    loader: () => axios.get(`${import.meta.env.VITE_dbApi}/blogs`, { withCredentials: true }),
+    loader: () =>
+      axios.get(`${import.meta.env.VITE_dbApi}/blogs`, {
+        withCredentials: true,
+      }),
+  },
+  {
+    path: "/blog/:id",
+    element: <BlogArticle />,
+    loader: ({params}) =>
+      axios.get(`${import.meta.env.VITE_dbApi}/blog/${params.id}`, {
+        withCredentials: true,
+      }),
   },
   {
     path: "*",

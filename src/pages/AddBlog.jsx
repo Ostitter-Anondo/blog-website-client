@@ -24,6 +24,7 @@ const AddBlog = () => {
       uid: userData.uid,
       summary: e.target.summary.value,
       blog: e.target.blog.value,
+      time: new Date().getTime(),
     };
     
     axiosHook

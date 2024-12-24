@@ -1,14 +1,20 @@
 import PropTypes from "prop-types";
 import { BsBookmarkHeart, BsTextParagraph } from "react-icons/bs";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useMainContext from "../../utils/useMainContext";
 import useAxios from "../../utils/useAxios";
 
 const BlogCard = ({ blogdata }) => {
   const { userData, setUserData, wishlist, setWishlist, toastSuc, toastErr } =
     useMainContext();
+  const navigate = useNavigate()
   const axiosHook = useAxios();
   const handleAddToWishlist = () => {
+    if (!userData) {
+      toastErr("you are not logged in, please login");
+      navigate('/login')
+      return;
+    }
     const blog = {
       blogId: blogdata._id,
       title: blogdata.title,
@@ -82,7 +88,7 @@ const BlogCard = ({ blogdata }) => {
             <BsBookmarkHeart />
             Wishlist
           </button>
-          <Link className="btn btn-outline btn-xs btn-warning">
+          <Link to={`/blog/${blogdata._id}`} className="btn btn-outline btn-xs btn-warning">
             <BsTextParagraph />
             Details
           </Link>

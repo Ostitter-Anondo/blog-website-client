@@ -6,6 +6,8 @@ import { FaRegTrashCan } from "react-icons/fa6";
 
 import "ka-table/style.css";
 import useAxios from "../utils/useAxios";
+import { Link } from "react-router";
+import { CgDetailsMore } from "react-icons/cg";
 
 const Wishlist = () => {
   const { wishlist, userData, setWishlist, toastSuc } = useMainContext();
@@ -73,12 +75,19 @@ const Wishlist = () => {
                   </td>
                   <th>
                     <div className="flex gap-6 justify-center">
+                      <Link
+                        to={`/blog/${article.blogId}`}
+                        className="btn btn-accent btn-xs"
+                      >
+                        <CgDetailsMore />
+                      </Link>
                       <button
-                        onClick={() => {handleDelete(article.blogId)}}
+                        onClick={() => {
+                          handleDelete(article.blogId);
+                        }}
                         className="btn btn-error btn-xs"
                       >
                         <FaRegTrashCan />
-                        Delete
                       </button>
                     </div>
                   </th>
