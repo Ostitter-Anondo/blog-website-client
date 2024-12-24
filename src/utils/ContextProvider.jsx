@@ -15,6 +15,7 @@ import axios from "axios";
 
 const ContextProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
+  const [wishlist, setWishlist] = useState(null);
   const [loading, setLoading] = useState(true);
   const [lightTheme, setLightTheme] = useState(true);
 
@@ -71,6 +72,8 @@ const ContextProvider = ({ children }) => {
     setLoading,
     userData,
     setUserData,
+    wishlist,
+    setWishlist,
     lightTheme,
     setLightTheme,
     signupMailPass,
@@ -91,7 +94,8 @@ const ContextProvider = ({ children }) => {
             withCredentials: true,
           })
           .then((res) => {
-            setUserData(res.data);
+            setUserData(res.data.userData);
+            setWishlist(res.data.wishlist);
             setLoading(false);
           })
           .catch((err) => console.error(err));
@@ -107,7 +111,7 @@ const ContextProvider = ({ children }) => {
             setLoading(false);
             setUserData(null);
           })
-          .catch(err => console.error(err));
+          .catch((err) => console.error(err));
       }
     });
     return () => {

@@ -17,6 +17,9 @@ const Navbar = () => {
         <NavLink to="/addblog">Add Blog</NavLink>
       </li>
       <li>
+        <NavLink to="/wishlist">Wishlist</NavLink>
+      </li>
+      <li>
         <NavLink to="/blogs">All Blogs</NavLink>
       </li>
     </>
@@ -46,7 +49,7 @@ const Navbar = () => {
   );
   const userBtns = (
     <>
-      <div className="menu menu-horizontal justify-center items-center gap-3 sm:border border-base-100 rounded-full">
+      <div className="menu menu-horizontal justify-center items-center gap-3 sm:border border-base-100 bg-base-200 rounded-full">
         <Link className="btn btn-circle size-12 p-1" to="/dashboard">
           <img
             src={userData?.photo}

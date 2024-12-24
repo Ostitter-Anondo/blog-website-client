@@ -16,6 +16,7 @@ import AddBlog from "./pages/AddBlog";
 import PrivateRoute from "./utils/PrivateRoute";
 import AllBlogs from "./pages/AllBlogs";
 import axios from "axios";
+import Wishlist from "./pages/Wishlist";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         <AddBlog />
       </PrivateRoute>
     ),
+  },
+  {
+    path: "/wishlist",
+    element: <Wishlist />,
   },
   {
     path: "/blogs",

@@ -7,7 +7,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import useAxios from "../../utils/useAxios";
 
 const Signin = () => {
-  const { loginMailPass, setUserData, signInGoogle, toastSuc, toastErr } =
+  const { loginMailPass, setUserData, setWishlist, signInGoogle, toastSuc, toastErr } =
     useMainContext();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -23,7 +23,8 @@ const Signin = () => {
     loginMailPass(email, password)
       .then((result) => axiosHook.get(`/user/${result.user.uid}`))
       .then((user) => {
-        setUserData(user.data);
+        setUserData(user.data.user);
+        setWishlist(user.data.wishlist);
         toastSuc(`User signed in successfully`);
         navigate("/");
       })
@@ -39,6 +40,7 @@ const Signin = () => {
           .put(`/googleuser`, { uid, email })
           .then((res) => {
             setUserData(res.data.user);
+            setWishlist(res.data.wishlist);
             toastSuc(`google login success`);
             navigate("/");
           })

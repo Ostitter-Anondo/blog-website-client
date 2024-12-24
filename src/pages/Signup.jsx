@@ -43,9 +43,8 @@ const Signup = () => {
       .then((result) => {
         console.log(result.user);
         const uid = result.user.uid;
-        const wishlist = [];
         axiosHook
-          .post("/newuser", { uid, email, name, photo, wishlist })
+          .post("/newuser", { uid, email, name, photo })
           .then((res) => {
             console.log(res.data);
             toastSuc(`registration successful`);
