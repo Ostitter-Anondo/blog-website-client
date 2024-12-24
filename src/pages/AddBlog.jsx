@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import { MdOutlineTitle } from "react-icons/md";
 import { FaRegFileImage } from "react-icons/fa";
 import useAxios from "../utils/useAxios";
+import Footer from "./components/Footer";
 
 const AddBlog = () => {
   const { userData, toastSuc } = useMainContext();
@@ -36,7 +37,7 @@ const AddBlog = () => {
   };
   return (
     <>
-      <header>
+      <header className="sticky top-0 z-50">
         <Navbar />
       </header>
       <main className="my-12">
@@ -106,6 +107,7 @@ const AddBlog = () => {
           </button>
         </form>
       </main>
+      <Footer />
     </>
   );
 };

@@ -1,3 +1,4 @@
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
 const Home = () => {
@@ -6,9 +7,10 @@ const Home = () => {
       <header className="sticky top-0">
         <Navbar />
       </header>
-      <main>
+      <main className="my-12 min-h-screen">
         idhar ghar
       </main>
+      <Footer />
     </>
   );
 };

@@ -8,6 +8,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import useMainContext from "../utils/useMainContext";
 import useAxios from "../utils/useAxios";
+import Footer from "./components/Footer";
 
 const Signup = () => {
   const { signupMailPass, toastErr, toastSuc } = useMainContext();
@@ -57,7 +58,7 @@ const Signup = () => {
 
   return (
     <>
-      <header>
+      <header className="sticky top-0 z-50">
         <Navbar />
       </header>
       <main className="my-12">
@@ -131,6 +132,7 @@ const Signup = () => {
           </button>
         </form>
       </main>
+      <Footer />
     </>
   );
 };

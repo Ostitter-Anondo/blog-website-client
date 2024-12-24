@@ -16,6 +16,9 @@ const Navbar = () => {
       <li>
         <NavLink to="/addblog">Add Blog</NavLink>
       </li>
+      <li>
+        <NavLink to="/blogs">All Blogs</NavLink>
+      </li>
     </>
   );
 
@@ -66,7 +69,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar bg-base-300 backdrop-blur">
+      <div className="navbar bg-base-300/30 backdrop-blur">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
