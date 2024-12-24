@@ -43,7 +43,7 @@ const Navbar = () => {
   );
   const userBtns = (
     <>
-      <div className="menu menu-horizontal items-center gap-3 border border-base-100 rounded-full">
+      <div className="menu menu-horizontal justify-center items-center gap-3 sm:border border-base-100 rounded-full">
         <Link className="btn btn-circle size-12 p-1" to="/dashboard">
           <img
             src={userData?.photo}
@@ -51,7 +51,6 @@ const Navbar = () => {
             alt="usrIMG"
           />
         </Link>
-        <p>{userData?.name}</p>
         <button
           onClick={() => {
             signOutUser();
