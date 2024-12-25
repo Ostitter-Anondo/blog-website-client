@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router";
+import { Link, useLoaderData, useNavigate } from "react-router";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Markdown from "react-markdown";
@@ -27,9 +27,11 @@ const BlogArticle = () => {
   }, [article._id, axiosHook]);
 
   console.log(commentStuff);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const photo = userData.photo? userData.photo : "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg"
     const comment = e.target.comment.value;
     const uid = userData.uid;
     const email = userData.email;
@@ -41,6 +43,7 @@ const BlogArticle = () => {
       uid,
       email,
       time,
+      photo,
     };
     axiosHook
       .post("/addcomment", postData)
@@ -96,7 +99,7 @@ const BlogArticle = () => {
                 {article.category}
               </span>
               {userData?.uid === article.uid ? (
-                <button className="btn rounded-lg btn-accent btn-sm w-fit">
+                <button onClick={()=>{navigate(`/editblog/${article._id}`)}} className="btn rounded-lg btn-accent btn-sm w-fit">
                   <FaEdit />
                 </button>
               ) : (
@@ -145,13 +148,16 @@ const BlogArticle = () => {
                   className="card border border-base-300 bg-base-200 p-3 w-full gap-3"
                 >
                   <div className="flex justify-between">
-                    <div>
-                      <h3 className="font-bold text-accent text-sm">
-                        {commentVals.email}
-                      </h3>
-                      <p className="text-xs font-light text-base-content/60">
-                        {getDateString(commentVals.time)}
-                      </p>
+                    <div className="flex gap-3 items-center">
+                      <img src={commentVals.photo} alt="usrImg" className="size-9 rounded-full" />
+                      <div>
+                        <h3 className="font-bold text-accent text-sm">
+                          {commentVals.email}
+                        </h3>
+                        <p className="text-xs font-light text-base-content/60">
+                          {getDateString(commentVals.time)}
+                        </p>
+                      </div>
                     </div>
                     {userData?.uid === commentVals.uid ? (
                       <>
