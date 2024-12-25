@@ -18,6 +18,9 @@ import BlogArticle from "./pages/BlogArticle";
 import EditBlog from "./pages/EditBlog";
 import Featured from "./pages/Featured";
 import VerificationTunnel from "./utils/VerificationTunnel";
+import Dashboard from "./pages/Dashboard";
+import AccountPage from "./pages/Dashboard/AccountPage";
+import MyBlogs from "./pages/Dashboard/MyBlogs";
 
 const router = createBrowserRouter([
   {
@@ -63,10 +66,40 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/featured",
+    path: "/dashboard",
     element: (
-        <Featured />
+      <PrivateRoute>
+        <VerificationTunnel>
+          <Dashboard />
+        </VerificationTunnel>
+      </PrivateRoute>
     ),
+    children: [
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <VerificationTunnel>
+              <AccountPage />
+            </VerificationTunnel>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/myblogs",
+        element: (
+          <PrivateRoute>
+            <VerificationTunnel>
+              <MyBlogs />
+            </VerificationTunnel>
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/featured",
+    element: <Featured />,
     loader: () =>
       axios.get(`${import.meta.env.VITE_dbApi}/featured`, {
         withCredentials: true,
