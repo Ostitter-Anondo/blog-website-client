@@ -1,4 +1,3 @@
-import { CgDetailsMore } from "react-icons/cg";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
@@ -6,7 +5,9 @@ import useAxios from "../../utils/useAxios";
 import useMainContext from "../../utils/useMainContext";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
-import NotFoundAnim from "./NotFoundAnim.json"
+import NotFoundAnim from "./NotFoundAnim.json";
+import FoundAnim from "./FoundAnim.json";
+import { FaEdit } from "react-icons/fa";
 
 const MyBlogs = () => {
   const { userData } = useMainContext();
@@ -77,10 +78,13 @@ const MyBlogs = () => {
 
   return (
     <>
-      <div className="flex justify-center text-center mb-24">
+      <div className="flex justify-center text-center">
         <h1 className="font-extrabold text-xl lg:text-3xl text-accent">
           All articles written by {userData.email}
         </h1>
+      </div>
+      <div className="size-64 mx-auto">
+        <Lottie animationData={FoundAnim} loop={true} />
       </div>
       <div className="overflow-scroll">
         <table className="table">
@@ -102,7 +106,14 @@ const MyBlogs = () => {
                       </div>
                     </div>
                     <div>
-                      <div className="font-bold">{article.title}</div>
+                      <div className="font-bold">
+                        <Link
+                          to={`/blog/${article._id}`}
+                          className="hover:underline"
+                        >
+                          {article.title}
+                        </Link>
+                      </div>
                       <div className="text-sm opacity-50">{article.email}</div>
                     </div>
                   </div>
@@ -115,10 +126,10 @@ const MyBlogs = () => {
                 <th>
                   <div className="flex gap-6 justify-center">
                     <Link
-                      to={`/blog/${article._id}`}
+                      to={`/editblog/${article._id}`}
                       className="btn btn-accent btn-xs"
                     >
-                      <CgDetailsMore />
+                      <FaEdit />
                     </Link>
                     <button
                       onClick={() => {

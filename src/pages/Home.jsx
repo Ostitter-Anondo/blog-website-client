@@ -82,7 +82,7 @@ const Home = () => {
     </div>
   );
   const userWelcome = (
-    <div className="flex flex-col items-center justify-between w-11/12 gap-6">
+    <div className="flex flex-col md:flex-row items-center justify-between w-11/12 gap-6">
       <div className="flex flex-col gap-6">
         <h1 className="font-extrabold text-4xl text-primary">
           Welcome back! How have you been,{" "}

@@ -1,10 +1,10 @@
 import { FaRegFileImage } from "react-icons/fa";
 import Footer from "./components/Footer";
-import { MdOutlineTitle } from "react-icons/md";
+import { MdOutlineClose, MdOutlineTitle } from "react-icons/md";
 import Navbar from "./components/Navbar";
 import useMainContext from "../utils/useMainContext";
 import useAxios from "../utils/useAxios";
-import { useLoaderData, useNavigate } from "react-router";
+import { Link, useLoaderData, useNavigate } from "react-router";
 
 const EditBlog = () => {
   const { userData, toastSuc } = useMainContext();
@@ -43,6 +43,9 @@ const EditBlog = () => {
         <Navbar />
       </header>
       <main className="my-12">
+        <Link to={-1} className="btn btn-circle self-start mx-6 mb-6">
+          <MdOutlineClose />
+        </Link>
         <form
           className="w-11/12 grid grid-cols-2 mx-auto gap-6"
           onSubmit={handleEditReview}
