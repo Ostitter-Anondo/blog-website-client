@@ -1,7 +1,6 @@
 import useMainContext from "../utils/useMainContext";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import NotFound from "./NotFound";
 import { FaRegTrashCan } from "react-icons/fa6";
 
 import "ka-table/style.css";
@@ -13,15 +12,11 @@ import { useEffect, useState } from "react";
 const Wishlist = () => {
   const { wishlist, userData, setWishlist, toastSuc } = useMainContext();
   const axiosHook = useAxios();
-  const [wishlistStuff, setWishlistStuff] = useState(null)
-
+  const [wishlistStuff, setWishlistStuff] = useState([])
+  
   useEffect(() => {
     axiosHook.get(`/getwishlist?wishlist=${wishlist.wishlist}`).then(res=>setWishlistStuff(res.data))
   }, [axiosHook, wishlist.wishlist]);
-
-  if (!wishlistStuff) {
-    return <NotFound />;
-  }
 
   const handleDelete = (blogId) => {
     const newData = {

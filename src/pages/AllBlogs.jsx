@@ -4,15 +4,22 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { useState } from "react";
 import { FaFilter, FaLayerGroup, FaSearch } from "react-icons/fa";
+import useAxios from "../utils/useAxios";
 
 const AllBlogs = () => {
   const [blogData, setBlogData] = useState(useLoaderData().data);
-  const handleFilter = (e)=>{
+
+  const axiosHook = useAxios();
+
+  const handleFilter = (e) => {
     e.preventDefault();
     const searchVal = e.target.search.value;
     const categoryVal = e.target.category.value;
     console.log(searchVal, categoryVal);
-  }
+    axiosHook
+      .get(`/filterblogs?search=${searchVal}&category=${categoryVal}`)
+      .then((res) => setBlogData(res.data));
+  };
   console.log(blogData);
   return (
     <>
@@ -31,7 +38,12 @@ const AllBlogs = () => {
             className="flex flex-col md:flex-row md:justify-end gap-6 items-center md:items-end my-6 w-11/12 mx-auto"
           >
             <label className="input input-bordered flex items-center gap-2">
-              <input type="text" className="grow" placeholder="Search" name="search" />
+              <input
+                type="text"
+                className="grow"
+                placeholder="Search"
+                name="search"
+              />
               <FaSearch />
             </label>
             <label className="form-control w-full max-w-xs">
@@ -44,10 +56,10 @@ const AllBlogs = () => {
                 <option value="All" selected>
                   All
                 </option>
-                <option value="Action">Science</option>
-                <option value="Adventure">Tech</option>
-                <option value="Puzzle">Nature</option>
-                <option value="Storytime">Entertainment</option>
+                <option value="Scienc">Science</option>
+                <option value="Tech">Tech</option>
+                <option value="Nature">Nature</option>
+                <option value="Entertainment">Entertainment</option>
               </select>
             </label>
             <button className="btn btn-neutral" type="submit">
