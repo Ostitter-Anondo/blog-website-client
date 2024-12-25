@@ -8,15 +8,22 @@ import useAxios from "../utils/useAxios";
 import { Link } from "react-router";
 import { CgDetailsMore } from "react-icons/cg";
 import { useEffect, useState } from "react";
+import DataNotHereYet from "./DataNotHereYet";
 
 const Wishlist = () => {
   const { wishlist, userData, setWishlist, toastSuc } = useMainContext();
   const axiosHook = useAxios();
-  const [wishlistStuff, setWishlistStuff] = useState([])
-  
+  const [wishlistStuff, setWishlistStuff] = useState([]);
+
   useEffect(() => {
-    axiosHook.get(`/getwishlist?wishlist=${wishlist.wishlist}`).then(res=>setWishlistStuff(res.data))
+    axiosHook
+      .get(`/getwishlist?wishlist=${wishlist.wishlist}`)
+      .then((res) => setWishlistStuff(res.data));
   }, [axiosHook, wishlist.wishlist]);
+
+  if (wishlistStuff.length === 0) {
+    return <DataNotHereYet />;
+  }
 
   const handleDelete = (blogId) => {
     const newData = {

@@ -13,12 +13,18 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="/addblog">Add Blog</NavLink>
-      </li>
-      <li>
-        <NavLink to="/wishlist">Wishlist</NavLink>
-      </li>
+      {userData ? (
+        <>
+          <li>
+            <NavLink to="/addblog">Add Blog</NavLink>
+          </li>
+          <li>
+            <NavLink to="/wishlist">Wishlist</NavLink>
+          </li>
+        </>
+      ) : (
+        <></>
+      )}
       <li>
         <NavLink to="/featured">Featured</NavLink>
       </li>
@@ -98,7 +104,9 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 border border-base-300 rounded-lg">{links}</ul>
+          <ul className="menu menu-horizontal px-1 border border-base-300 rounded-lg">
+            {links}
+          </ul>
         </div>
         <div className="navbar-end">{userData ? userBtns : authtBtns}</div>
       </div>

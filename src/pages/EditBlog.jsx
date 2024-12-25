@@ -11,7 +11,7 @@ const EditBlog = () => {
   const article = useLoaderData().data;
 
   const axiosHook = useAxios();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleEditReview = (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const EditBlog = () => {
         navigate("/");
       })
       .catch((err) => console.error(err));
-  }
+  };
 
   return (
     <>
@@ -69,7 +69,11 @@ const EditBlog = () => {
               required
             />
           </label>
-          <select defaultValue={article.category} className="select select-info w-full grow col-span-2 md:col-span-1" name="category">
+          <select
+            defaultValue={article.category}
+            className="select select-info w-full grow col-span-2 md:col-span-1"
+            name="category"
+          >
             <option value="n/a" disabled>
               Genre
             </option>

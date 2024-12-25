@@ -17,11 +17,16 @@ import Wishlist from "./pages/Wishlist";
 import BlogArticle from "./pages/BlogArticle";
 import EditBlog from "./pages/EditBlog";
 import Featured from "./pages/Featured";
+import VerificationTunnel from "./utils/VerificationTunnel";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    loader: () =>
+      axios.get(`${import.meta.env.VITE_dbApi}/recentblogs`, {
+        withCredentials: true,
+      }),
   },
   {
     path: "/signup",
@@ -41,7 +46,9 @@ const router = createBrowserRouter([
     path: "/addblog",
     element: (
       <PrivateRoute>
-        <AddBlog />
+        <VerificationTunnel>
+          <AddBlog />
+        </VerificationTunnel>
       </PrivateRoute>
     ),
   },
@@ -49,7 +56,9 @@ const router = createBrowserRouter([
     path: "/wishlist",
     element: (
       <PrivateRoute>
-        <Wishlist />
+        <VerificationTunnel>
+          <Wishlist />
+        </VerificationTunnel>
       </PrivateRoute>
     ),
   },
@@ -83,7 +92,9 @@ const router = createBrowserRouter([
     path: "/editblog/:id",
     element: (
       <PrivateRoute>
-        <EditBlog />
+        <VerificationTunnel>
+          <EditBlog />
+        </VerificationTunnel>
       </PrivateRoute>
     ),
     loader: ({ params }) =>

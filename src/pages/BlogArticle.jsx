@@ -7,6 +7,8 @@ import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import useMainContext from "../utils/useMainContext";
 import useAxios from "../utils/useAxios";
 import { useEffect, useState } from "react";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 
 const BlogArticle = () => {
   const { userData, toastSuc } = useMainContext();
@@ -31,7 +33,9 @@ const BlogArticle = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const photo = userData.photo? userData.photo : "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg"
+    const photo = userData.photo
+      ? userData.photo
+      : "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg";
     const comment = e.target.comment.value;
     const uid = userData.uid;
     const email = userData.email;
@@ -86,7 +90,13 @@ const BlogArticle = () => {
           <h1 className="text-center font-extrabold text-5xl">
             {article.title}
           </h1>
-          <img src={article.cover} className="rounded" alt="articleImg" />
+          <div className="size-fit hover:cursor-pointer">
+            <PhotoProvider>
+              <PhotoView src={article.cover}>
+                <img src={article.cover} className="rounded" alt="articleImg" />
+              </PhotoView>
+            </PhotoProvider>
+          </div>
           <p className="text-sm text-justify">{article.summary}</p>
           <hr className="border border-accent w-full" />
           <div className="flex justify-between w-full items-center">
@@ -99,7 +109,12 @@ const BlogArticle = () => {
                 {article.category}
               </span>
               {userData?.uid === article.uid ? (
-                <button onClick={()=>{navigate(`/editblog/${article._id}`)}} className="btn rounded-lg btn-accent btn-sm w-fit">
+                <button
+                  onClick={() => {
+                    navigate(`/editblog/${article._id}`);
+                  }}
+                  className="btn rounded-lg btn-accent btn-sm w-fit"
+                >
                   <FaEdit />
                 </button>
               ) : (
@@ -149,7 +164,11 @@ const BlogArticle = () => {
                 >
                   <div className="flex justify-between">
                     <div className="flex gap-3 items-center">
-                      <img src={commentVals.photo} alt="usrImg" className="size-9 rounded-full" />
+                      <img
+                        src={commentVals.photo}
+                        alt="usrImg"
+                        className="size-9 rounded-full"
+                      />
                       <div>
                         <h3 className="font-bold text-accent text-sm">
                           {commentVals.email}

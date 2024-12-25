@@ -6,7 +6,7 @@ import LoadingPage from "./components/LoadingPage";
 import Signin from "../pages/Login/Signin";
 
 const PrivateRoute = ({ children }) => {
-  const { userData, loading, } = useContext(Context);
+  const { userData, loading } = useContext(Context);
   if (loading) {
     return (
       <LoadingPage />
