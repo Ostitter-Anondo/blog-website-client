@@ -16,6 +16,7 @@ import axios from "axios";
 import Wishlist from "./pages/Wishlist";
 import BlogArticle from "./pages/BlogArticle";
 import EditBlog from "./pages/EditBlog";
+import Featured from "./pages/Featured";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,16 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/featured",
+    element: (
+        <Featured />
+    ),
+    loader: () =>
+      axios.get(`${import.meta.env.VITE_dbApi}/featured`, {
+        withCredentials: true,
+      }),
+  },
+  {
     path: "/blogs",
     element: <AllBlogs />,
     loader: () =>
@@ -63,15 +74,19 @@ const router = createBrowserRouter([
   {
     path: "/blog/:id",
     element: <BlogArticle />,
-    loader: ({params}) =>
+    loader: ({ params }) =>
       axios.get(`${import.meta.env.VITE_dbApi}/blog/${params.id}`, {
         withCredentials: true,
       }),
   },
   {
     path: "/editblog/:id",
-    element: <EditBlog />,
-    loader: ({params}) =>
+    element: (
+      <PrivateRoute>
+        <EditBlog />
+      </PrivateRoute>
+    ),
+    loader: ({ params }) =>
       axios.get(`${import.meta.env.VITE_dbApi}/blog/${params.id}`, {
         withCredentials: true,
       }),

@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 
 const Wishlist = () => {
   const { wishlist, userData, setWishlist, toastSuc } = useMainContext();
-  console.log(wishlist);
   const axiosHook = useAxios();
   const [wishlistStuff, setWishlistStuff] = useState(null)
 

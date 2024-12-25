@@ -24,6 +24,7 @@ const EditBlog = () => {
       uid: userData.uid,
       summary: e.target.summary.value,
       blog: e.target.blog.value,
+      size: e.target.blog.value.split(" ").length,
     };
 
     axiosHook

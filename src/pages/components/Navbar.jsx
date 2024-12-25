@@ -20,6 +20,9 @@ const Navbar = () => {
         <NavLink to="/wishlist">Wishlist</NavLink>
       </li>
       <li>
+        <NavLink to="/featured">Featured</NavLink>
+      </li>
+      <li>
         <NavLink to="/blogs">All Blogs</NavLink>
       </li>
     </>
@@ -84,7 +87,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100/30 backdrop-blur-lg border border-base-300 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               {links}
             </ul>
@@ -95,7 +98,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
+          <ul className="menu menu-horizontal px-1 border border-base-300 rounded-lg">{links}</ul>
         </div>
         <div className="navbar-end">{userData ? userBtns : authtBtns}</div>
       </div>
