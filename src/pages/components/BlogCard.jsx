@@ -26,7 +26,7 @@ const BlogCard = ({ blogdata }) => {
     if (!userData.wishlistId) {
       const newBlog = {
         uid: userData.uid,
-        wishlist: [blog],
+        wishlist: [blogdata._id],
       };
       axiosHook
         .post("/newwishlist", newBlog)
@@ -40,14 +40,14 @@ const BlogCard = ({ blogdata }) => {
         .catch((err) => console.error(err));
     } else {
       if (
-        wishlist.wishlist.filter((item) => item.blogId === blog.blogId).length >
+        wishlist.wishlist.filter((item) => item === blog.blogId).length >
         0
       ) {
         toastErr(`blog already in wishlist`);
       } else {
         const newBlog = {
           uid: userData.uid,
-          wishlist: [...wishlist.wishlist, blog],
+          wishlist: [...wishlist.wishlist, blog.blogId],
         };
         axiosHook
           .put("/addtowishlist", newBlog)

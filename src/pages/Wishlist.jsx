@@ -8,19 +8,26 @@ import "ka-table/style.css";
 import useAxios from "../utils/useAxios";
 import { Link } from "react-router";
 import { CgDetailsMore } from "react-icons/cg";
+import { useEffect, useState } from "react";
 
 const Wishlist = () => {
   const { wishlist, userData, setWishlist, toastSuc } = useMainContext();
   console.log(wishlist);
   const axiosHook = useAxios();
-  if (!wishlist) {
+  const [wishlistStuff, setWishlistStuff] = useState(null)
+
+  useEffect(() => {
+    axiosHook.get(`/getwishlist?wishlist=${wishlist.wishlist}`).then(res=>setWishlistStuff(res.data))
+  }, [axiosHook, wishlist.wishlist]);
+
+  if (!wishlistStuff) {
     return <NotFound />;
   }
 
   const handleDelete = (blogId) => {
     const newData = {
       uid: userData.uid,
-      wishlist: wishlist.wishlist.filter((item) => item.blogId != blogId),
+      wishlist: wishlist.wishlist.filter((item) => item != blogId),
     };
     axiosHook
       .put("/addtowishlist", newData)
@@ -51,7 +58,7 @@ const Wishlist = () => {
               </tr>
             </thead>
             <tbody>
-              {wishlist.wishlist.map((article, index) => (
+              {wishlistStuff.map((article, index) => (
                 <tr key={index} className="h-full">
                   <td>
                     <div className="flex items-center gap-3">
@@ -76,14 +83,14 @@ const Wishlist = () => {
                   <th>
                     <div className="flex gap-6 justify-center">
                       <Link
-                        to={`/blog/${article.blogId}`}
+                        to={`/blog/${article._id}`}
                         className="btn btn-accent btn-xs"
                       >
                         <CgDetailsMore />
                       </Link>
                       <button
                         onClick={() => {
-                          handleDelete(article.blogId);
+                          handleDelete(article._id);
                         }}
                         className="btn btn-error btn-xs"
                       >
