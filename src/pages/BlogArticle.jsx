@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Markdown from "react-markdown";
 import { IoIosArrowBack } from "react-icons/io";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import useMainContext from "../utils/useMainContext";
 import useAxios from "../utils/useAxios";
 import { useEffect, useState } from "react";
@@ -12,13 +12,12 @@ const BlogArticle = () => {
   const { userData, toastSuc } = useMainContext();
   const [commentStuff, setCommentStuff] = useState(null);
   const article = useLoaderData().data;
-
   const axiosHook = useAxios();
 
   const getDateString = (timeData) => {
     const dateVal = new Date(timeData).toString();
     return dateVal;
-  }
+  };
 
   useEffect(() => {
     axiosHook
@@ -36,18 +35,44 @@ const BlogArticle = () => {
     const email = userData.email;
     const time = new Date().getTime();
     const articleId = article._id;
-    const postData = { articleId, commentData: { comment, uid, email, time } };
+    const postData = {
+      articleId,
+      comment,
+      uid,
+      email,
+      time,
+    };
     axiosHook
       .post("/addcomment", postData)
       .then((res) => {
         console.log(res);
+        setCommentStuff(res.data.comments);
+        console.log(commentStuff);
         toastSuc("comment added");
       })
       .catch((err) => console.error(err));
   };
+
+  const handleDelete = (commentId) => {
+    axiosHook
+      .delete(`/deletecomment/${commentId}`)
+      .then((res) => {
+        if (res.data.deletedCount > 0) {
+          toastSuc(`comment was successfully deleted`);
+        }
+      })
+      .then(() => {
+        axiosHook
+          .get(`/comments/${article._id}`)
+          .then((res) => setCommentStuff(res.data))
+          .catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <>
-      <header className="sticky top-0">
+      <header className="sticky top-0 z-50">
         <Navbar />
       </header>
       <main className="my-12">
@@ -85,7 +110,11 @@ const BlogArticle = () => {
         </div>
         <hr className="border border-primary w-11/12 mx-auto my-6" />
         {!userData || userData.uid === article.uid ? (
-          <></>
+          <>
+            <h1 className="font-bold text-3xl text-center text-primary">
+              you can not comment here
+            </h1>
+          </>
         ) : (
           <form
             onSubmit={handleSubmit}
@@ -101,27 +130,45 @@ const BlogArticle = () => {
             </button>
           </form>
         )}
-        <div className="w-11/12 mx-auto flex flexcol gap-6 my-12">
+        <div className="w-11/12 mx-auto flex flex-col gap-6 my-12">
           {!commentStuff ? (
             <>
-              <h1 className="font-bold text-3xl text-center text-primary">
-                such empty, much not comments
+              <h1 className="font-bold text-xl text-center text-primary">
+                such empty, much not comments...
               </h1>
             </>
           ) : (
             <>
-              {commentStuff.comments.map((commentVals, index) => (
+              {commentStuff.map((commentVals, index) => (
                 <div
                   key={index}
                   className="card border border-base-300 bg-base-200 p-3 w-full gap-3"
                 >
-                  <div>
-                    <h3 className="font-bold text-accent text-sm">{commentVals.email}</h3>
-                    <p className="text-xs font-light text-base-content/60">{getDateString(commentVals.time)}</p>
+                  <div className="flex justify-between">
+                    <div>
+                      <h3 className="font-bold text-accent text-sm">
+                        {commentVals.email}
+                      </h3>
+                      <p className="text-xs font-light text-base-content/60">
+                        {getDateString(commentVals.time)}
+                      </p>
+                    </div>
+                    {userData?.uid === commentVals.uid ? (
+                      <>
+                        <button
+                          onClick={() => {
+                            handleDelete(commentVals._id);
+                          }}
+                          className="btn btn-xs btn-error"
+                        >
+                          <FaRegTrashAlt />
+                        </button>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </div>
-                  <p>
-                    {commentVals.comment}
-                  </p>
+                  <p>{commentVals.comment}</p>
                 </div>
               ))}
             </>
