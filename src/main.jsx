@@ -21,6 +21,7 @@ import VerificationTunnel from "./utils/VerificationTunnel";
 import Dashboard from "./pages/Dashboard";
 import AccountPage from "./pages/Dashboard/AccountPage";
 import MyBlogs from "./pages/Dashboard/MyBlogs";
+import ForgotPass from "./pages/Login/ForgotPass";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Signin />,
+      },
+      {
+        path: "/login/forgotpass",
+        element: <ForgotPass />,
       },
     ],
   },
