@@ -7,12 +7,12 @@ const ForgotPass = () => {
 
   return (
     <div>
-      <div className="w-full">
+      <div className="w-full mb-40 mt-24">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             toastErr(
-              "was not implemented for the convenience of the examiner"
+              "was not implemented for the convenience the examiner"
             );
           }}
           className="flex flex-col w-11/12 md:w-9/12 lg:w-7/12 items-center mx-auto gap-6"

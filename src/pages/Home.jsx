@@ -130,13 +130,13 @@ const Home = () => {
         </div>
         <div className="w-11/12 mx-auto my-12 flex justify-between gap-6 flex-col-reverse lg:flex-row">
           <div className="relative h-80 w-1/2">
-            <div className="absolute top-0 left-8">
+            <div className="absolute top-0 md:left-8">
               <CustomerReviewCard data={customerC} />
             </div>
-            <div className="absolute top-48 left-8">
+            <div className="absolute top-48 md:left-8">
               <CustomerReviewCard data={customerB} />
             </div>
-            <div className="absolute top-24 left-6 md:left-32">
+            <div className="absolute top-24 left-12 md:left-32">
               <CustomerReviewCard data={customerA} />
             </div>
           </div>

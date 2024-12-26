@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 const CustomerReviewCard = ({ data }) => {
   return (
-    <div className="w-96 p-6 bg-neutral/30 backdrop-blur rounded flex flex-col gap-3">
+    <div className="w-80 md:w-96 p-6 bg-neutral/30 backdrop-blur-sm rounded flex flex-col gap-3">
       <div className="flex gap-3">
         <img
           src={`https://eu.ui-avatars.com/api/?name=${data.fname}+${data.lname}&size=35`}

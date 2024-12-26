@@ -36,7 +36,7 @@ const Navbar = () => {
 
   const authtBtns = (
     <>
-      <ul className="menu menu-horizontal p-1 items-center border border-base-100 rounded-xl">
+      <ul className="menu menu-horizontal p-1 items-center border border-base-300 rounded-xl">
         <li>
           <NavLink
             to="/login"
@@ -58,7 +58,7 @@ const Navbar = () => {
   );
   const userBtns = (
     <>
-      <div className="menu menu-horizontal justify-center items-center gap-3 sm:border border-base-100 bg-base-200 rounded-full">
+      <div className="menu menu-horizontal justify-center items-center gap-3 sm:border border-base-300 bg-base-200 rounded-full">
         <Link className="btn btn-circle size-12 p-1" to="/dashboard">
           <img
             src={
