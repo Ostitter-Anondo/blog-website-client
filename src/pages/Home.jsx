@@ -136,7 +136,7 @@ const Home = () => {
             <div className="absolute top-48 md:left-8">
               <CustomerReviewCard data={customerB} />
             </div>
-            <div className="absolute top-24 left-12 md:left-32">
+            <div className="absolute top-24 left-4 md:left-32">
               <CustomerReviewCard data={customerA} />
             </div>
           </div>
