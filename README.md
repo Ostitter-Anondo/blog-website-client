@@ -1,4 +1,4 @@
-# Batch 10 Assignment 11 Category 05 by Jawad Ibn Mamoon
+# Basic Full Crud Blog Website Front End
 
 ## BlogWebsite: A simple and easy to use blog posting website hosted on the web
 
