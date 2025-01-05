@@ -8,6 +8,10 @@ This is a very simple blog website meant to demonstrate my skills as a web devel
 
 [Project Live Demo](https://b10a11-ostitter-anondo.web.app/)
 
+## Back-end
+
+[Server Side Repo](https://github.com/Ostitter-Anondo/full-crud-blog-server)
+
 ## Key Features
 
 - simple full CRUD system
