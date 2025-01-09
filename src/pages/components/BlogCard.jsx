@@ -7,12 +7,12 @@ import useAxios from "../../utils/useAxios";
 const BlogCard = ({ blogdata }) => {
   const { userData, setUserData, wishlist, setWishlist, toastSuc, toastErr } =
     useMainContext();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const axiosHook = useAxios();
   const handleAddToWishlist = () => {
     if (!userData) {
       toastErr("you are not logged in, please login");
-      navigate('/login')
+      navigate("/login");
       return;
     }
     if (!userData.wishlistId) {
@@ -32,8 +32,7 @@ const BlogCard = ({ blogdata }) => {
         .catch((err) => console.error(err));
     } else {
       if (
-        wishlist.wishlist.filter((item) => item === blogdata._id).length >
-        0
+        wishlist.wishlist.filter((item) => item === blogdata._id).length > 0
       ) {
         toastErr(`blog already in wishlist`);
       } else {
@@ -57,10 +56,14 @@ const BlogCard = ({ blogdata }) => {
 
   return (
     <div className="card border border-base-300 rounded-tr-none rounded-bl-none transition-all hover:shadow-xl hover:shadow-accent/10 hover:scale-105 grid lg:grid-rows-3">
-      <figure className="h-48">
-        <img src={blogdata.cover} alt="blogImg" className="" />
+      <figure className="h-48 w-full">
+        <img
+          src={blogdata.cover ? blogdata.cover : `https://placehold.co/600x400`}
+          alt="blogImg"
+          className="object-cover w-full"
+        />
       </figure>
-      <div className="card-body lg:row-span-2">
+      <div className="card-body">
         <div className="">
           <h3 className="card-title inline-block">
             {blogdata.title}{" "}
@@ -72,19 +75,22 @@ const BlogCard = ({ blogdata }) => {
         <div className="overflow-scroll">
           <p className="text-xs text-justify">{blogdata.summary}</p>
         </div>
-        <div className="card-actions justify-end">
-          <button
-            onClick={handleAddToWishlist}
-            className="btn btn-outline btn-xs btn-info"
-          >
-            <BsBookmarkHeart />
-            Wishlist
-          </button>
-          <Link to={`/blog/${blogdata._id}`} className="btn btn-outline btn-xs btn-warning">
-            <BsTextParagraph />
-            Details
-          </Link>
-        </div>
+      </div>
+      <div className="card-body flex-row justify-end items-end">
+        <button
+          onClick={handleAddToWishlist}
+          className="btn btn-outline btn-xs btn-info"
+        >
+          <BsBookmarkHeart />
+          Wishlist
+        </button>
+        <Link
+          to={`/blog/${blogdata._id}`}
+          className="btn btn-outline btn-xs btn-warning"
+        >
+          <BsTextParagraph />
+          Details
+        </Link>
       </div>
     </div>
   );
